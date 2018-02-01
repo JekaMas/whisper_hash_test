@@ -15,6 +15,9 @@ func TestBloom(t *testing.T) {
 	var count uint64
 	total := uint64(256*256*256*256)
 
+	fmt.Println("| Total count | Collisions | Probability of collision | Progress |")
+	fmt.Println("| --- | --- | --- | --- |")
+
 	for i0:=0; i0<256; i0++ {
 		top[0] = byte(i0)
 
@@ -37,7 +40,7 @@ func TestBloom(t *testing.T) {
 
 					count++
 					if count%100000000 == 0 {
-						fmt.Printf("Total count %v\tCollisions %v\tProbability of collision %.2f\tProgress %.2f\n",
+						fmt.Printf("| %v | %v | %.2f | %.2f |\n",
 							count, collisionCount, float64(collisionCount)/float64(count)*100, float64(count)/float64(total)*100)
 					}
 				}
