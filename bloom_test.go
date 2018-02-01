@@ -3,6 +3,8 @@ package bloom_filter
 import (
 	"testing"
 	"fmt"
+
+	"github.com/ethereum/go-ethereum/whisper/whisperv6"
 )
 
 func TestBloom(t *testing.T) {
@@ -25,10 +27,9 @@ func TestBloom(t *testing.T) {
 				for i3:=0; i3<256; i3++ {
 					top[3] = byte(i3)
 
-					hash = string(TopicToBloom(TopicType(top)))
+					hash = string(whisperv6.TopicToBloom(whisperv6.TopicType(top)))
 
-					_, ok := hashes[hash]
-					if ok {
+					if _, ok := hashes[hash]; ok {
 						collisionCount++
 					} else {
 						hashes[hash] = struct{}{}
@@ -47,5 +48,5 @@ func TestBloom(t *testing.T) {
 	fmt.Println("\n\nFinal result:")
 	fmt.Printf("Total count %v\tCollisions %v\tProbability of collision %.2f\tProgress %.2f\n",
 		count, collisionCount, float64(collisionCount)/float64(count)*100, float64(count)/float64(total)*100)
-	fmt.Println("Unique values:", len(hashes))
+	fmt.Println("Unique hashes:", len(hashes))
 }
